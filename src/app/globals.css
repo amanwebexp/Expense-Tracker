@@ -101,3 +101,16 @@ button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1imvrq
     border-top-left-radius: 5%;
     border-bottom-right-radius: 5%
 } */
+
+
+.input-area input {
+  color: aliceblue !important;
+  border: 1px solid white;
+  padding: 15px 0px 15px 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: border-color 0.2s ease; /* optional, for smoothness */
+}
+.input-area input:hover {
+  border-color: white !important; /* keeps same color as before hover */
+}

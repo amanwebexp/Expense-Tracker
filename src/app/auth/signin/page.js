@@ -51,85 +51,98 @@ const Login = () => {
 
   return (
     <>
-      <div className="mt-5 grid place-items-center h-screen">
-        <div className="shadow-xl border border-slate-200 flex rounded-3xl bg-white overflow-hidden login-container" style={{ width: "80%", maxWidth: "1200px" }}>
-          <div className="w-1/2">
-            <img src="/signin.jpg" alt="Sign In" className="h-full w-full object-cover" />
-          </div>
-          <div className="w-1/2">
+    <div className="flex items-center  justify-center h-screen  bg-[url('/bg-cloud.jpg')] bg-cover bg-center">
+      <div className="flex  rounded-3xl overflow-hidden shadow-2xl">
+        {/* Left Section */}
+        <div className="w-1/2 flex items-center justify-center">
+          <img
+            src="/signin.jpg"
+            alt="Login Visual"
+            className="w-full h-auto object-contain"
+          />
+        </div>
+
+        {/* Right Section */}
+        <div className="bg-[#2563EB] opacity-[70%] w-[50%] flex items-center justify-center p-10">
           <Sheet
-              sx={{
-                mx: "auto",
-                my: 5,
-                py: 5,
-                px: 5,
-                display: "flex",
-                flexDirection: "column",
-                alignItems:"center",
-                gap: 2,
-              }}
+            variant="plain"
+            sx={{
+              backgroundColor: "transparent",
+              width: "100%",
+              maxWidth: "380px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col items-center w-full"
             >
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                  <Typography variant="h4" className="text-center">
-                    <b>Welcome!</b>
-                  </Typography>
+              <Typography
+                level="h3"
+                className="text-white font-bold !text-5xl mb-2"
+              >
+                Welcome Back!
+              </Typography>
+              <Typography className="text-slate-200 text-sm mb-6 text-center">
+                Sign in to access your guided meditations, daily practices, and
+                personal journey.
+              </Typography>
+
+              {/* Email Input */}
+              <FormControl className="w-full mb-4 !text-white">
+                <InputField
+                  control={control}
+                  errors={errors}
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  // label="Email"
+                  className="input-area"
+                />
+              </FormControl>
+
+              {/* Password Input */}
+              <FormControl className="w-full mb-6">
+                <InputField
+                  control={control}
+                  errors={errors}
+                  name="password"
+                  type="password"
+                  placeholder="********"
+                  // label="Password"
+                  className="input-area"
+                />
+              </FormControl>
+
+              {/* Login Button */}
+              {loader === false ? (
+                <Button
+                  type="submit"
+                  className="w-full bg-white text-[#1e40af] font-semibold py-2 rounded-full hover:bg-slate-100 transition-all"
+                >
+                  Login
+                </Button>
+              ) : (
+                <div className="flex justify-center">
+                  <CircularProgress size={24} sx={{ color: "white" }} />
                 </div>
-                <br />
-                <div>
-                  <FormControl>
-                    <InputField
-                      className="w-80 ml-2"
-                      label="Email"
-                      control={control}
-                      errors={errors}
-                      name="email"
-                      type="email"
-                      placeholder="example123@gmail.com"
-                    />
-                  </FormControl>
-                </div>
-                <br />
-                <div>
-                  <FormControl>
-                    <InputField
-                      className="w-80 ml-2"
-                      control={control}
-                      errors={errors}
-                      name="password"
-                      type="password"
-                      label="Password"
-                    />
-                  </FormControl>
-                </div>
-                <br />
-                <div>
-                {loader===false?(<>  <Button
-                    type="submit"
-                    className=" btn w-80 ml-2 bg-blue-600 hover:bg-blue-700 text-white font-bold 
-                    cursor-pointer px-6 py-2 rounded-md transition duration-300"
-                  >
-                    Login
-                  </Button></>):(<>
-                    <div className="flex justify-center">
-                        <CircularProgress size={24} />
-                      </div>
-                  </>)}
-                  <br />
-                  <p className="mt-2 ml-2">
-                  { `Don't have an account?`}
-                    <span className="ml-2">
-                      <Link href="/signup" className="text-blue-600">
-                        Create account
-                      </Link>
-                    </span>
-                  </p>
-                </div>
-              </form>
-            </Sheet>
-          </div>
+              )}
+
+              {/* Sign up link */}
+              <p className="text-slate-200 text-sm mt-4">
+                Don’t have an account?{" "}
+                <Link href="/signup" className="text-white font-semibold">
+                  Create account
+                </Link>
+              </p>
+            </form>
+          </Sheet>
         </div>
       </div>
+    </div>
     </>
   );
 };

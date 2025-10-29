@@ -23,7 +23,7 @@ const InputField = ({
         name={name}
         render={({ field }) => (
           <TextField 
-          variant="standard"
+
             type={type}
             value={value}
             className={className}

@@ -6,6 +6,7 @@ import Provider from "@/component/Provider";
 import ResponsiveAppBar from "@/component/Navbar/Navbar";
 import UserContextProvider from "@/context/UserContextProvider";
 import { Container } from "@mui/material";
+import ConditionalNav from "@/component/CondiatinalNav";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Create Next App",
@@ -19,8 +20,8 @@ export default function RootLayout({ children }) {
         <UserContextProvider>
         <Provider>
         <ToastContainer/>
-            <ResponsiveAppBar />
-            <Container className="">{children}</Container>
+            <ConditionalNav/>
+            {children}
           </Provider>
         </UserContextProvider>
     

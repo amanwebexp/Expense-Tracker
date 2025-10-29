@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Button, Typography } from "@mui/material";
+import { Button, FormControl, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { signupValidation } from "@/component/validation/signupValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -84,51 +84,57 @@ const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
   }, [user]);
   return (
     <>
-      <div className="mt-5 grid place-items-center h-screen">
-        <div
-          className="shadow-xl border border-slate-200 flex rounded-3xl bg-white overflow-hidden login-container"
-          style={{ width: "100%", maxWidth: "1200px" }}
-        >
-          <div className="w-1/2">
-            <img
-              src="/signup.jpg"
-              alt="Sign Up"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="w-1/2">
-            <Sheet
-              sx={{
-                mx: "auto",
-                my: 5,
-                py: 5,
-                px: 5,
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-              }}
+     <div className="flex items-center  justify-center h-screen  bg-[url('/bg-cloud.jpg')] bg-cover bg-center">
+      <div className="flex  rounded-3xl overflow-hidden shadow-2xl">
+        {/* Left Section */}
+       <div className="w-1/2 flex items-center justify-center">
+          <img
+            src="/Register.png"
+            alt="Sign Up Visual"
+              className="w-full h-auto object-contain"
+          />
+        </div>
+
+        {/* Right Section */}
+       <div className="bg-[#2563EB] opacity-[70%] w-[50%] flex items-center justify-center p-10">
+          <Sheet
+            variant="plain"
+            sx={{
+              backgroundColor: "transparent",
+              width: "100%",
+              maxWidth: "380px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col items-center w-full"
             >
-              <form onSubmit={handleSubmit(onSubmit)} className="text-center">
-                <div>
-                  <Typography variant="h4" className="text-center">
-                    <b>Register User</b>
-                  </Typography>
-                </div>
-                <br />
-                <SignUpHelp control={control} errors={errors} loader={loader}/>
-                <p className="mt-2 ml-2">
-                  Already have an account
-                  <span className="ml-2">
-                    <Link href="/auth/signin" className="text-blue-600">
-                      Sign In
-                    </Link>
-                  </span>
-                </p>
-              </form>
-            </Sheet>
-          </div>
+              {/* Title */}
+              <Typography
+                level="h3"
+                className="text-white font-bold !text-4xl mb-6 text-center"
+              >
+                Register User
+              </Typography>
+
+              {/* Input Fields */}
+              <SignUpHelp control={control} errors={errors} loader={loader} />
+
+              {/* Footer Link */}
+              <p className="text-slate-200 text-sm mt-4">
+                Already have an account?{" "}
+                <Link href="/auth/signin" className="text-white font-semibold">
+                  Sign in
+                </Link>
+              </p>
+            </form>
+          </Sheet>
         </div>
       </div>
+    </div>
     </>
   );
 };

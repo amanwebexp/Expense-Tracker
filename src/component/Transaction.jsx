@@ -29,6 +29,7 @@ import UserContext from "@/context/UserContext";
 import dayjs from "dayjs";
 import { transactionValidation } from "./validation/transactionValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ExpenseDesign from "./ExpenseDesign/ExpenseDesign";
 const Transaction = () => {
   const {
     control,
@@ -53,7 +54,6 @@ const Transaction = () => {
   let verify = totalbalance?.find((item) => item.user == currentLogin);
 
   useEffect(() => {
-
     if (verify) {
       setNewBalance(verify?.data);
     } else {
@@ -96,12 +96,14 @@ const Transaction = () => {
   const onSubmit = (formData) => {
     setLoader(true);
     try {
-    
-
       const storedData =
         editIndex !== null
-          ? data.map((item, index) => (item.id == editIndex && item.user == currentLogin ? {...formData, user:currentLogin } : item))
-          : [...data, {...formData, user:currentLogin , id : Math.random() }];
+          ? data.map((item, index) =>
+              item.id == editIndex && item.user == currentLogin
+                ? { ...formData, user: currentLogin }
+                : item
+            )
+          : [...data, { ...formData, user: currentLogin, id: Math.random() }];
 
       setData(storedData);
 
@@ -121,10 +123,6 @@ const Transaction = () => {
     }
   };
 
-
-
-
-
   const handleOpen = () => {
     setOpen(true);
     reset({
@@ -137,7 +135,6 @@ const Transaction = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   const onDelete = () => {
     if (deleteIndex !== null) {
@@ -175,7 +172,7 @@ const Transaction = () => {
     setDeleteOpenModal(false);
   };
   const handleEdit = (index) => {
-    const fieldData = data.find((item)=> item.id== index)
+    const fieldData = data.find((item) => item.id == index);
     reset(fieldData);
     setEditIndex(index);
     setOpen(true);
@@ -405,10 +402,13 @@ const Transaction = () => {
         <br />
         <Container>
           <Box>
+            <span className="mar text-black font-bold text-2xl md:text-4xl mb-2">
+              Track Your Monthly Expenses
+            </span>
             <Box className="bg-gray-500">
               <Button
                 onClick={handleOpen}
-                className="addbtn mt-4 mb-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                // className="addbtn mt-4 mb-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
               >
                 {balanceInitialized &&
                 (verify?.data === 0 || verify?.data === undefined)
@@ -417,50 +417,103 @@ const Transaction = () => {
               </Button>
             </Box>
             <br />
-            <Box>
-              <Grid>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 2,
+                p: 2,
+              }}
+            >
+              {/* Left Section */}
+              <Box sx={{ flex: "1 1 50%", minWidth: "300px" }}>
+                <Grid>
+                  <Item
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Total Income:{" "}
+                    <span className="span-income ">${totalIncome}</span>
+                  </Item>
+
+                  <Item
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Total Expenses:{" "}
+                    <span className="span-expense ">${totalExpense}</span>
+                  </Item>
+
+                  <Item
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Balance:
+                    <span className="span">
+                      {!verify?.data ? (
+                        <></>
+                      ) : (
+                        <>
+                          <EditIcon
+                            className="editicon"
+                            onClick={handleEditBalanceOpen}
+                            sx={{ cursor: "pointer", mr: 1 }}
+                          />
+                          <DeleteIcon
+                            className="deleteicon"
+                            onClick={handleDeleteBalance}
+                            sx={{ cursor: "pointer", mr: 1 }}
+                          />
+                        </>
+                      )}
+                      ${verify?.data?.toFixed(2)}
+                    </span>
+                  </Item>
+                </Grid>
+
                 <Item
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "16px",
+                    padding: "8px 12px",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: "6px",
+                    background: "#fafafa",
+                    width: "100%",
+                  }}
                 >
-                  Total Income:{" "}
-                  <span className="span-income ">${totalIncome}</span>
-                </Item>
-                <Item
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  Total Expenses:{" "}
-                  <span className="span-expense ">${totalExpense}</span>
-                </Item>
-                <Item
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  Balance:
-                  <span className="span">
-                    {!verify?.data ? (
-                      <></>
-                    ) : (
-                      <>
-                        <EditIcon
-                          className="editicon"
-                          onClick={handleEditBalanceOpen}
-                        />
-                        <DeleteIcon
-                          className="deleteicon"
-                          onClick={handleDeleteBalance}
-                        />
-                      </>
-                    )}
-                    ${verify?.data?.toFixed(2)}
+                  Remaining Balance:
+                  <span>
+                    $ {isNaN(remainingBalance) ? 0 : remainingBalance}
                   </span>
                 </Item>
-              </Grid>
-              <br />
-              <Item
-                style={{ display: "flex", justifyContent: "space-between" }}
+              </Box>
+
+              {/* Right Section */}
+              <Box
+                sx={{
+                  flex: "1 1 40%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                Remaining Balance:{" "}
-                <span>$ {isNaN(remainingBalance) ? 0 : remainingBalance}</span>
-              </Item>
+                <ExpenseDesign />
+              </Box>
             </Box>
           </Box>
           <br />
