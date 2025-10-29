@@ -45,7 +45,7 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
   };
   const displayedData = transactionData || [];
 
-  console.log("displayedData",displayedData)
+  
   return (
     <div>
       <Paper
