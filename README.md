@@ -51,8 +51,7 @@ Users can log and categorize their expenditures.
 Provide visual insights into spending habits and budget adherence.
 ### User Authentication: 
 Allow users to create accounts to save and manage their financial data securely.
-### Mobile Responsiveness:
-Ensure the application is accessible on various devices.
+### Only Desktop Version:
 
 By adhering to this scope, the Expense Tracker will serve as a powerful tool for users aiming to achieve better financial management and stability.
 ## Conclusion
