@@ -22,30 +22,34 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
   const [transactionData, setTransactionData] = useState([]);
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
 
-  useEffect(() => {
 
-    const newData = data.filter((item)=> item.user == currentLogin)
+  // filter the data only for current user:-
+  useEffect(() => {
+    const newData = data.filter((item) => item.user == currentLogin);
     setTransactionData(newData);
   }, [data]);
 
+
+  // handler for tab change:-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
- 
-    useEffect(() => {
-      const requiredLength = page * 10; 
-      if (transactionData.length === requiredLength) {
-        setPage(0); 
-      }
-    }, [page, transactionData.length]);
- 
+
+  useEffect(() => {
+    const requiredLength = page * 10;
+    if (transactionData.length === requiredLength) {
+      setPage(0);
+    }
+  }, [page, transactionData.length]);
+
+
+  //  handler for per page change :-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
   const displayedData = transactionData || [];
 
-  
   return (
     <div>
       <Paper
@@ -102,18 +106,24 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
                       </Tooltip>
                     </TableCell>
                     <TableCell>
-                   <Tooltip title="Delete transaction" className="cursor-pointer">   
-                   <DeleteIcon
-                        className="deleteicontable"
-                        onClick={() => handleDelete(item.id)}
-                      />
-                   </Tooltip>
-                    <Tooltip title="Edit transaction" className="cursor-pointer">
-                    <EditIcon
-                        className="editicontable"
-                        onClick={() => handleEdit(item.id)}
-                      />
-                    </Tooltip>
+                      <Tooltip
+                        title="Delete transaction"
+                        className="cursor-pointer"
+                      >
+                        <DeleteIcon
+                          className="deleteicontable"
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </Tooltip>
+                      <Tooltip
+                        title="Edit transaction"
+                        className="cursor-pointer"
+                      >
+                        <EditIcon
+                          className="editicontable"
+                          onClick={() => handleEdit(item.id)}
+                        />
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))

@@ -20,18 +20,22 @@ function ResponsiveAppBar() {
   const pathName = usePathname();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  // Getting user Info. from session:-
   const { data: session } = useSession();
   if (pathName === "/auth/signin") {
     return null
   }
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+ 
 
+
+  // Handler for Close Menu:--
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
+
+  // Handler for Close User Menu:--
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -49,14 +53,7 @@ function ResponsiveAppBar() {
                 <Typography>Home</Typography>
               </Link>
             </IconButton>
-            {/* <IconButton
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white" }}
-            >
-              <Link href={routesUrl.about}>
-                <Typography>About</Typography>
-              </Link>
-            </IconButton> */}
+            
             {session ? (
               <>
                 <IconButton

@@ -15,6 +15,8 @@ import { useState } from "react";
 import useLocalStorage from "use-local-storage";
 
 const Login = () => {
+
+  // useForm Hook:-
   const {
     control,
     handleSubmit,
@@ -22,8 +24,11 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(signinValidation) });
   const router = useRouter();
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
-
   const [loader,setLoader]= useState(false)
+
+
+
+//  Submit handler :-
   const onSubmit = async (data) => {
     const { email, password } = data;
     const localData = localStorage?.getItem("register");

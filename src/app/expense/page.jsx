@@ -10,37 +10,43 @@ import Income from "@/component/Income";
 import Transaction from "@/component/Transaction";
 import ExpenseDesign from "@/component/ExpenseDesign/ExpenseDesign";
 
+import { Container } from "@mui/material";
+
 const ExpenseData = () => {
   const [value, setValue] = React.useState("1");
 
+
+  // Handler for tabs change :-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
     <>
+     <Container  maxWidth="xl">
+
       <Box
         sx={{
           marginTop : "30px !important",
-          width: "100vw",
+          width: "full !important",
           typography: "body1",
           // bgcolor: "#eeeeeeff",
           m: 0,
-          p: 0,
+          p:  "0px !important",
+          
+
         }}
       >
-        <TabContext value={value}>
+        <TabContext value={value} >
           {/* Tab Header */}
           <Box
             sx={{
-              // borderBottom: 1,
-              // borderColor: "divider",
               display: "flex",
-              justifyContent: "center",
-              // bgcolor: "#ffffffff",
-              width: "100%",
-              m: 0,
-              pt: 1,
+              width: "full",
+              justifyContent: "flex-start",
+              bgcolor: "#C4E2FF", 
+              mx: 0,
+              p: 0,
             }}
           >
             <TabList
@@ -52,9 +58,9 @@ const ExpenseData = () => {
                 "& .MuiTab-root": {
                   textTransform: "none",
                   fontWeight: "600",
+                  width: "full",             
                   px: 3,
-                  py: 1,
-                  borderRadius: "6px 6px 0 0",
+                  py: 0,
                   color: "#000",
                   transition: "0.3s",
                 },
@@ -73,19 +79,20 @@ const ExpenseData = () => {
         
 
           {/* Tab Panels */}
-          <Box sx={{ px: 3 }}>
-            <TabPanel value="1">
+          <Box>
+            <TabPanel className="p-0" value="1">
               <Transaction />
             </TabPanel>
-            <TabPanel value="2">
+            <TabPanel className="p-0"  value="2">
               <Income />
             </TabPanel>
-            <TabPanel value="3">
+            <TabPanel className="p-0" value="3">
               <Expense />
             </TabPanel>
           </Box>
         </TabContext>
       </Box>
+      </Container>
     </>
   );
 };

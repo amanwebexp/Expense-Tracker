@@ -19,6 +19,8 @@ const SetBalance = ({ setOpen }) => {
   const [loader, setLoader] = useState(false);
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
 
+
+  // Submit handler :-
   const onSubmit = (data) => {
     setLoader(true);
     const storedData = parseFloat(data.balance);
@@ -37,7 +39,7 @@ const SetBalance = ({ setOpen }) => {
         control={control}
         name="balance"
         className="mt-4"
-        label="Set Balance"
+        label=""
         placeholder="Set Balance"
         inputType="number"
         id="balance"

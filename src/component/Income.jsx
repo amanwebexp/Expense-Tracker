@@ -19,13 +19,19 @@ const Income = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
 
+
+   //  handler for page change :-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  // handler for per page change :-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  // filter the data only for Income:-
   useEffect(() => {
     const getData = localStorage.getItem("expense");
     if (getData) {

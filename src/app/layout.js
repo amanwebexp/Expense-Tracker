@@ -3,9 +3,7 @@ import './globals.css';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Provider from "@/component/Provider";
-import ResponsiveAppBar from "@/component/Navbar/Navbar";
 import UserContextProvider from "@/context/UserContextProvider";
-import { Container } from "@mui/material";
 import ConditionalNav from "@/component/CondiatinalNav";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -21,6 +19,7 @@ export default function RootLayout({ children }) {
         <Provider>
         <ToastContainer/>
             <ConditionalNav/>
+
             {children}
           </Provider>
         </UserContextProvider>

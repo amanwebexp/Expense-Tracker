@@ -10,7 +10,6 @@ import {
   Modal,
   Paper,
   TextField,
-  Typography,
 } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -26,7 +25,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
 import DeleteModal from "./modal/DeleteModal";
 import UserContext from "@/context/UserContext";
-import dayjs from "dayjs";
 import { transactionValidation } from "./validation/transactionValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ExpenseDesign from "./ExpenseDesign/ExpenseDesign";
@@ -51,6 +49,7 @@ const Transaction = () => {
   const [loader, setLoader] = useState(false);
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
 
+  // For Verify current user :-
   let verify = totalbalance?.find((item) => item.user == currentLogin);
 
   useEffect(() => {
@@ -60,16 +59,20 @@ const Transaction = () => {
       setNewBalance(null);
     }
   }, []);
+
   useEffect(() => {
     if (verify?.data !== undefined) {
       setBalanceInitialized(true);
     }
   }, [totalbalance]);
+
   useEffect(() => {
     if (verify?.data !== undefined) {
       setBalanceInitialized(true);
     }
   }, [totalbalance]);
+
+  // For style:-
   const style = {
     position: "absolute",
     top: "50%",
@@ -83,6 +86,8 @@ const Transaction = () => {
     maxHeight: "80vh",
     overflowY: "auto",
   };
+
+  // For style:-
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
     ...theme.typography.body2,
@@ -93,6 +98,7 @@ const Transaction = () => {
     }),
   }));
 
+  // Handler Submit:-
   const onSubmit = (formData) => {
     setLoader(true);
     try {
@@ -123,6 +129,7 @@ const Transaction = () => {
     }
   };
 
+  // Model Open and reset data in fields handler :-
   const handleOpen = () => {
     setOpen(true);
     reset({
@@ -132,10 +139,13 @@ const Transaction = () => {
       type: "",
     });
   };
+
+  // Handler for model close:-
   const handleClose = () => {
     setOpen(false);
   };
 
+  // Handler for  Delete:-
   const onDelete = () => {
     if (deleteIndex !== null) {
       //  Case 1: Delete from expense list
@@ -164,13 +174,18 @@ const Transaction = () => {
     }
   };
 
+  // Handler for Delete model open:-
   const handleDelete = (index) => {
     setDeleteIndex(index);
     setDeleteOpenModal(true);
   };
+
+  // Handler for Delete model close:-
   const deleteHandleModalClose = () => {
     setDeleteOpenModal(false);
   };
+
+  // Handler for Edit :-
   const handleEdit = (index) => {
     const fieldData = data.find((item) => item.id == index);
     reset(fieldData);
@@ -178,6 +193,7 @@ const Transaction = () => {
     setOpen(true);
   };
 
+  // Funtion for Income calculate:-
   const calculateIncome = (type) => {
     return data
       .filter((item) => item.type === type && item.user == currentLogin)
@@ -189,6 +205,7 @@ const Transaction = () => {
     }
   }, [totalbalance]);
 
+  // Finding Income & Expense :-
   useEffect(() => {
     const income = calculateIncome("Income");
     const expense = calculateIncome("Expense");
@@ -196,8 +213,10 @@ const Transaction = () => {
     setTotalExpense(expense);
   }, [data]);
 
+  // Finding Remaining Balance:-
   const remainingBalance = verify?.data - totalExpense;
 
+  // Handler for Balance Edit :-
   const editBalance = (newBalance) => {
     setTotalBalance((prev) => {
       const safePrev = Array.isArray(prev) ? prev : [];
@@ -224,6 +243,7 @@ const Transaction = () => {
     successMsg("Balance updated successfully");
   };
 
+  // Handler for Balance Model Open :-
   const handleEditBalanceOpen = () => {
     setNewBalance(verify?.data);
     if (verify?.data !== undefined) {
@@ -231,185 +251,193 @@ const Transaction = () => {
     }
   };
 
+  // Handler for Balance Model Close :-
   const handleEditBalanceClose = () => {
     setEditBalanceOpen(false);
   };
+
+  // Handler for Delete Balance Model Open :-
   const handleDeleteBalance = () => {
     setDeleteOpenModal(true);
   };
+
+  // Handler for Delete Balance Model Close :-
   const handleCloseBalance = () => {
     setOpen(false);
   };
   return (
     <>
-      <div>
-        {verify?.data !== undefined ? (
-          <>
-            <Modal open={open} onClose={handleClose}>
-              <Box sx={style}>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  Add Your Expense and Income
-                  <span>
-                    <CloseIcon onClick={handleClose} />
-                  </span>
-                </div>
-                <br />
-                <Sheet
-                  sx={{
-                    width: 500,
-                    mx: "auto",
-                    my: 4,
-                    py: 3,
-                    px: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 2,
-                    borderRadius: "sm",
-                    boxShadow: "md",
-                  }}
-                  variant="outlined"
-                >
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <>
-                      <FormControl fullWidth margin="normal" className="mt-4  ">
-                        <FormInput
-                          control={control}
-                          name="title"
-                          label="Title"
-                          placeholder="Title"
-                          inputType="text"
-                          id="title"
-                          errors={errors}
-                        />
-                      </FormControl>
-
-                      <FormControl fullWidth margin="normal" className="mt-4  ">
-                        <FormInput
-                          control={control}
-                          name="amount"
-                          label="Amount"
-                          placeholder="Amount"
-                          inputType="number"
-                          id="amount"
-                          min="0"
-                          errors={errors}
-                        />
-                      </FormControl>
-
-                      <FormControl fullWidth margin="normal" className="  ">
-                        <FormInputSelect
-                          control={control}
-                          name="type"
-                          label="Expense Type"
-                          options={["Income", "Expense"]}
-                          errors={errors}
-                        />
-                      </FormControl>
-
-                      <FormControl fullWidth margin="normal" className="mt-4  ">
-                        <DateSelect
-                          className="shadow-lg relative"
-                          name="date"
-                          control={control}
-                          errors={errors}
-                          required={true}
-                          label="Date"
-                          inputFormat="YYYY-MM-DD"
-                        />
-                      </FormControl>
-
-                      <FormControl fullWidth margin="normal" className="mt-4  ">
-                        <FormInput
-                          control={control}
-                          errors={errors}
-                          name="description"
-                          label="Description"
-                          placeholder="Description"
-                          inputType="text"
-                          id="description"
-                        />
-                      </FormControl>
-
-                      {loader === false ? (
-                        <>
-                          {" "}
-                          <Button
-                            className="mt-4 ml-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                            type="submit"
-                          >
-                            {editIndex !== null ? <> Update </> : <> Submit </>}
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex justify-center">
-                            <CircularProgress size={24} />
-                          </div>
-                        </>
-                      )}
-                    </>
-                  </form>
-                </Sheet>
-              </Box>
-            </Modal>
-            <Modal open={editBalanceOpen} onClose={handleEditBalanceClose}>
-              <Box sx={style}>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  Edit Balance
-                  <span>
-                    <CloseIcon onClick={handleEditBalanceClose} />
-                  </span>
-                </div>
-                <TextField
-                  type="number"
-                  value={newBalance}
-                  variant="outlined"
-                  className="w-80"
-                  inputProps={{ min: 0 }}
-                  onChange={(e) => setNewBalance(parseFloat(e.target.value))}
-                />
-                <br />
-                <Button
-                  onClick={() => {
-                    editBalance(newBalance);
-                    handleEditBalanceClose();
-                  }}
-                  className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                >
-                  Update Balance
-                </Button>
-              </Box>
-            </Modal>
-          </>
-        ) : (
-          <Modal open={open} onClose={handleCloseBalance}>
+      {verify?.data !== undefined ? (
+        <>
+          {/* Add Your Expense and Income Form */}
+          <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                Set Balance{" "}
+                Add Your Expense and Income
                 <span>
-                  {" "}
                   <CloseIcon onClick={handleClose} />
                 </span>
               </div>
-              <SetBalance totalExpense={totalExpense} setOpen={setOpen} />
+              <br />
+              <Sheet
+                sx={{
+                  width: 500,
+                  mx: "auto",
+                  my: 4,
+                  py: 3,
+                  px: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  borderRadius: "sm",
+                  boxShadow: "md",
+                }}
+                variant="outlined"
+              >
+
+                {/* main form */}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <>
+                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                      <FormInput
+                        control={control}
+                        name="title"
+                        label="Title"
+                        placeholder="Title"
+                        inputType="text"
+                        id="title"
+                        errors={errors}
+                      />
+                    </FormControl>
+
+                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                      <FormInput
+                        control={control}
+                        name="amount"
+                        label="Amount"
+                        placeholder="Amount"
+                        inputType="number"
+                        id="amount"
+                        min="0"
+                        errors={errors}
+                      />
+                    </FormControl>
+
+                    <FormControl fullWidth margin="normal" className="  ">
+                      <FormInputSelect
+                        control={control}
+                        name="type"
+                        label="Expense Type"
+                        options={["Income", "Expense"]}
+                        errors={errors}
+                      />
+                    </FormControl>
+
+                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                      <DateSelect
+                        className="shadow-lg relative"
+                        name="date"
+                        control={control}
+                        errors={errors}
+                        required={true}
+                        label="Date"
+                        inputFormat="YYYY-MM-DD"
+                      />
+                    </FormControl>
+
+                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                      <FormInput
+                        control={control}
+                        errors={errors}
+                        name="description"
+                        label="Description"
+                        placeholder="Description"
+                        inputType="text"
+                        id="description"
+                      />
+                    </FormControl>
+
+                    {loader === false ? (
+                      <>
+                        {" "}
+                        <Button
+                          className="mt-4 ml-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                          type="submit"
+                        >
+                          {editIndex !== null ? <> Update </> : <> Submit </>}
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex justify-center">
+                          <CircularProgress size={24} />
+                        </div>
+                      </>
+                    )}
+                  </>
+                </form>
+              </Sheet>
             </Box>
           </Modal>
-        )}
-        <br />
-        <Container>
-          <Box>
-            <span className="mar text-black font-bold text-2xl md:text-4xl mb-2">
+
+          {/* Edit Balance Model :- */}
+
+          <Modal open={editBalanceOpen} onClose={handleEditBalanceClose}>
+            <Box sx={style}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                Edit Balance
+                <span>
+                  <CloseIcon onClick={handleEditBalanceClose} />
+                </span>
+              </div>
+              <TextField
+                type="number"
+                value={newBalance}
+                variant="outlined"
+                className="w-80"
+                inputProps={{ min: 0 }}
+                onChange={(e) => setNewBalance(parseFloat(e.target.value))}
+              />
+              <br />
+              <Button
+                onClick={() => {
+                  editBalance(newBalance);
+                  handleEditBalanceClose();
+                }}
+                className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+              >
+                Update Balance
+              </Button>
+            </Box>
+          </Modal>
+        </>
+      ) : (
+        // Add Balance Model :-
+        <Modal open={open} onClose={handleCloseBalance}>
+          <Box sx={style}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              Add Balance{" "}
+              <span>
+                {" "}
+                <CloseIcon onClick={handleClose} />
+              </span>
+            </div>
+            <SetBalance totalExpense={totalExpense} setOpen={setOpen} />
+          </Box>
+        </Modal>
+      )}
+
+      <br />
+
+      <Container maxWidth="xl !p-0">
+        <div className="flex justify-between items-center mboxes">
+          {/* left Section */}
+          <Box className="">
+            <span className="mar font-bold text-3xl">
               Track Your Monthly Expenses
             </span>
-            <Box className="bg-gray-500">
-              <Button
-                onClick={handleOpen}
-                // className="addbtn mt-4 mb-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-              >
+            <Box className="!mt-5">
+              <Button onClick={handleOpen} className="addbtn">
                 {balanceInitialized &&
                 (verify?.data === 0 || verify?.data === undefined)
                   ? "Add Balance"
@@ -425,17 +453,17 @@ const Transaction = () => {
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: 2,
-                p: 2,
               }}
             >
               {/* Left Section */}
-              <Box sx={{ flex: "1 1 50%", minWidth: "300px" }}>
+              <Box sx={{ flex: "1 1 30%", minWidth: "200px" }}>
                 <Grid>
                   <Item
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
                       marginBottom: "8px",
+                      boxShadow: "none",
                     }}
                   >
                     Total Income:{" "}
@@ -447,6 +475,7 @@ const Transaction = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       marginBottom: "8px",
+                      boxShadow: "none",
                     }}
                   >
                     Total Expenses:{" "}
@@ -458,6 +487,7 @@ const Transaction = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       marginBottom: "8px",
+                      boxShadow: "none",
                     }}
                   >
                     Balance:
@@ -489,7 +519,7 @@ const Transaction = () => {
                     justifyContent: "space-between",
                     alignItems: "center",
                     marginTop: "16px",
-                    padding: "8px 12px",
+                    // padding: "8px 12px",
                     border: "1px solid #e0e0e0",
                     borderRadius: "6px",
                     background: "#fafafa",
@@ -502,34 +532,38 @@ const Transaction = () => {
                   </span>
                 </Item>
               </Box>
-
-              {/* Right Section */}
-              <Box
-                sx={{
-                  flex: "1 1 40%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ExpenseDesign />
-              </Box>
             </Box>
           </Box>
-          <br />
-          <TransactionTable
-            data={data}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
-          />
-        </Container>
-        <DeleteModal
-          onDelete={onDelete}
-          deleteMessage="Are you certain you want to proceed with this deletion?"
-          deleteOpenModal={deleteOpenModal}
-          deleteHandleModalClose={deleteHandleModalClose}
+
+          {/* Right Section */}
+          <Box
+            sx={{
+              flex: "1 1 40%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ExpenseDesign />
+          </Box>
+        </div>
+        <br />
+
+        {/*Transaction  Table  */}
+        <TransactionTable
+          data={data}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
         />
-      </div>
+      </Container>
+
+      {/* Delete Modal */}
+      <DeleteModal
+        onDelete={onDelete}
+        deleteMessage="Are you certain you want to proceed with this deletion?"
+        deleteOpenModal={deleteOpenModal}
+        deleteHandleModalClose={deleteHandleModalClose}
+      />
     </>
   );
 };

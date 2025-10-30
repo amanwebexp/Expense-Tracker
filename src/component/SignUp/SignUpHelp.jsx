@@ -6,52 +6,44 @@ import { CircularProgress, FormControl } from "@mui/material";
 
 const SignUpHelp = ({ control, errors, loader }) => {
   return (
-    <div className="flex flex-col items-center w-full">
+    <div>
       {/* Username */}
-                    <FormControl className="w-full mb-6">
-      
-      <InputField
-        className="input-area"
-        // label="Name"
-        placeholder="User Name"
-        control={control}
-        errors={errors}
-        name="username"
-        type="text"
-      />
+      <FormControl className="w-full mb-6">
+        <InputField
+          className="input-area"
+          placeholder="User Name"
+          control={control}
+          errors={errors}
+          name="username"
+          type="text"
+        />
       </FormControl>
 
-              <FormControl className="w-full mb-6">
-
       {/* Email */}
-      <InputField
-        className="input-area"
-        // label="Email"
-        placeholder="Enter your email"
-        control={control}
-        errors={errors}
-        name="email"
-        type="email"
-      />
-            </FormControl>
-
-
-
-              <FormControl className="w-full mb-6">
+      <FormControl className="w-full mb-6">
+        <InputField
+          className="input-area"
+          placeholder="Enter your email"
+          control={control}
+          errors={errors}
+          name="email"
+          type="email"
+        />
+      </FormControl>
 
       {/* Password */}
-      <InputField
-        className="input-area"
-        // label="Password"
-        placeholder="********"
-        control={control}
-        errors={errors}
-        name="password"
-        type="password"
-      />
-            </FormControl>
-
+      <FormControl className="w-full mb-6">
+        <InputField
+          className="input-area"
+          placeholder="********"
+          control={control}
+          errors={errors}
+          name="password"
+          type="password"
+        />
+      </FormControl>
       {/* Submit Button */}
+
       {loader === false ? (
         <Button
           type="submit"

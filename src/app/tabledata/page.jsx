@@ -36,6 +36,8 @@ export default function TableData() {
     p: 4,
   };
 
+
+  // Submit Handler:-
   const onSubmit = (formData) => {
     try {
       const storedData =
@@ -54,6 +56,8 @@ export default function TableData() {
     }
   };
 
+
+
   useEffect(() => {
     const userData = localStorage.getItem("userData");
     if (userData) {
@@ -61,19 +65,27 @@ export default function TableData() {
     }
   }, [setTableData]);
 
+
+
+  // handler for Edit 
   const handleEdit = (index) => {
     reset(data[index]);
     setEditIndex(index);
     setOpen(true);
   };
 
+  // handler for Delete:- 
   const handleDelete = (index) => {
     const updateData = data.filter((_, i) => i !== index);
     localStorage.setItem("userData", JSON.stringify(updateData));
     setTableData(JSON.stringify(updateData));
   };
 
+
+  // handler for Model Open :-
   const handleOpen = () => setOpen(true);
+
+ // handler for Model Close:-  
   const handleClose = () => {
     setOpen(false);
     reset();

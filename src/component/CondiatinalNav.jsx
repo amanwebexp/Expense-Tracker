@@ -11,9 +11,16 @@ const ConditionalNav = () => {
     return null;
   }
 
-  console.log("Current Path:", pathname);
 
-  return <ResponsiveAppBar />;
+  return  <ResponsiveAppBar />;
+
+
+      
+
+   
+  
+  
+  
 };
 
 export default ConditionalNav;

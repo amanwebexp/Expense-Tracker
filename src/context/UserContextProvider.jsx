@@ -5,19 +5,16 @@ import axios from "axios";
 import useLocalStorage from "use-local-storage";
 
 const UserContextProvider = ({ children }) => {
-  const [apiData, setApiData] = useState([]);
-  const getApi = async () => {
-    const response = await axios.get("https://dummyapi.online/api/movies");
-    setApiData(response.data);
-  };
-  useEffect(() => {
-    getApi();
-  }, []);
+
   const [user, setUser] = useState(null);
   const [value, setValue] = useState(null);
   const [tableData, setTableData] = useState(null);
   const [resetData, setResetData] = useState();
   const [totalbalance, setTotalBalance] = useLocalStorage("balance",[]);
+
+
+
+  // Getting users from localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem("users");
     const savedData = localStorage.getItem("data");
@@ -40,8 +37,6 @@ const UserContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        apiData,
-        setApiData,
         value,
         setValue,
         tableData,
