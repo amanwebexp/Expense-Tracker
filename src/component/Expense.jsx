@@ -9,6 +9,7 @@ import {
     TablePagination,
     Typography,
   } from "@mui/material";
+import dayjs from "dayjs";
   import React, { useEffect, useState } from "react";
 import useLocalStorage from "use-local-storage";
   const Expense = () => {
@@ -73,7 +74,8 @@ import useLocalStorage from "use-local-storage";
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.amount}</TableCell>
                         <TableCell>{item.type}</TableCell>
-                        <TableCell>{item.date}</TableCell>
+                        <TableCell>{dayjs(item.date).format("YYYY-MM-DD")}
+                        </TableCell>
                         <TableCell>{item.description}</TableCell>
                       </TableRow>
                     </>

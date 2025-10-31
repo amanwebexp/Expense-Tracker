@@ -9,6 +9,7 @@ import {
   TablePagination,
   Typography,
 } from "@mui/material";
+import dayjs from "dayjs";
 
 import React, { useEffect, useState } from "react";
 import useLocalStorage from "use-local-storage";
@@ -19,8 +20,7 @@ const Income = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
 
-
-   //  handler for page change :-
+  //  handler for page change :-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -77,7 +77,9 @@ const Income = () => {
                       <TableCell>{item.title}</TableCell>
                       <TableCell>{item.amount}</TableCell>
                       <TableCell>{item.type}</TableCell>
-                      <TableCell>{item.date}</TableCell>
+                      <TableCell>
+                        {dayjs(item.date).format("YYYY-MM-DD")}
+                      </TableCell>
                       <TableCell>{item.description}</TableCell>
                     </TableRow>
                   </>
