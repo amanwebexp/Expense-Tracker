@@ -80,9 +80,7 @@ const Transaction = () => {
     transform: "translate(-50%, -50%)",
     width: 600,
     bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
+    p: 2,
     maxHeight: "80vh",
     overflowY: "auto",
   };
@@ -272,18 +270,26 @@ const Transaction = () => {
           {/* Add Your Expense and Income Form */}
           <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                }}
+              >
                 Add Your Expense and Income
                 <span>
-                  <CloseIcon onClick={handleClose} />
+                  <CloseIcon
+                    onClick={handleClose}
+                    sx={{ cursor: "pointer" }}
+                  />
                 </span>
               </div>
               <br />
               <Sheet
                 sx={{
-                  width: 500,
-                  mx: "auto",
-                  my: 4,
+                  width: 562,
                   py: 3,
                   px: 2,
                   display: "flex",
@@ -294,7 +300,6 @@ const Transaction = () => {
                 }}
                 variant="outlined"
               >
-
                 {/* main form */}
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <>
@@ -310,7 +315,7 @@ const Transaction = () => {
                       />
                     </FormControl>
 
-                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                    <FormControl fullWidth margin="normal" className="mt-4">
                       <FormInput
                         control={control}
                         name="amount"
@@ -323,7 +328,7 @@ const Transaction = () => {
                       />
                     </FormControl>
 
-                    <FormControl fullWidth margin="normal" className="  ">
+                    <FormControl fullWidth margin="normal" className="mt-4">
                       <FormInputSelect
                         control={control}
                         name="type"
@@ -333,7 +338,7 @@ const Transaction = () => {
                       />
                     </FormControl>
 
-                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                    <FormControl fullWidth margin="normal" className="mt-4">
                       <DateSelect
                         className="shadow-lg relative"
                         name="date"
@@ -345,7 +350,11 @@ const Transaction = () => {
                       />
                     </FormControl>
 
-                    <FormControl fullWidth margin="normal" className="mt-4  ">
+                    <FormControl
+                      fullWidth
+                      margin="normal"
+                      className="mt-4 !mb-4"
+                    >
                       <FormInput
                         control={control}
                         errors={errors}
@@ -357,23 +366,15 @@ const Transaction = () => {
                       />
                     </FormControl>
 
-                    {loader === false ? (
-                      <>
-                        {" "}
-                        <Button
-                          className="mt-4 ml-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                          type="submit"
-                        >
-                          {editIndex !== null ? <> Update </> : <> Submit </>}
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex justify-center">
-                          <CircularProgress size={24} />
-                        </div>
-                      </>
-                    )}
+                    <>
+                      {" "}
+                      <Button
+                        className="mt-4 ml-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                        type="submit"
+                      >
+                        {editIndex !== null ? <> Update </> : <> Submit </>}
+                      </Button>
+                    </>
                   </>
                 </form>
               </Sheet>
@@ -384,17 +385,27 @@ const Transaction = () => {
 
           <Modal open={editBalanceOpen} onClose={handleEditBalanceClose}>
             <Box sx={style}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "22px",
+                  marginBottom: "20px",
+                }}
+              >
                 Edit Balance
                 <span>
-                  <CloseIcon onClick={handleEditBalanceClose} />
+                  <CloseIcon
+                    onClick={handleEditBalanceClose}
+                    sx={{ cursor: "pointer" }}
+                  />
                 </span>
               </div>
               <TextField
                 type="number"
                 value={newBalance}
                 variant="outlined"
-                className="w-80"
+                className="!w-full"
                 inputProps={{ min: 0 }}
                 onChange={(e) => setNewBalance(parseFloat(e.target.value))}
               />
@@ -404,7 +415,7 @@ const Transaction = () => {
                   editBalance(newBalance);
                   handleEditBalanceClose();
                 }}
-                className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                className="balancebtn"
               >
                 Update Balance
               </Button>
@@ -415,11 +426,21 @@ const Transaction = () => {
         // Add Balance Model :-
         <Modal open={open} onClose={handleCloseBalance}>
           <Box sx={style}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "22px",
+                marginBottom: "15px",
+              }}
+            >
               Add Balance{" "}
               <span>
                 {" "}
-                <CloseIcon onClick={handleClose} />
+                <CloseIcon
+                  onClick={handleClose}
+                  sx={{ cursor: "pointer"}}
+                />
               </span>
             </div>
             <SetBalance totalExpense={totalExpense} setOpen={setOpen} />

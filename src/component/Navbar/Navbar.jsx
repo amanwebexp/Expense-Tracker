@@ -47,10 +47,10 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <IconButton
               onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white" }}
+              sx={{ color: "white" , paddingLeft: "0" }}
             >
               <Link href="/">
-                <Typography>Home</Typography>
+                <Typography >Home</Typography>
               </Link>
             </IconButton>
             

@@ -22,13 +22,11 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
   const [transactionData, setTransactionData] = useState([]);
   const [currentLogin, setCurrentLogin] = useLocalStorage("currentLogin");
 
-
   // filter the data only for current user:-
   useEffect(() => {
     const newData = data.filter((item) => item.user == currentLogin);
     setTransactionData(newData);
   }, [data]);
-
 
   // handler for tab change:-
   const handleChangePage = (event, newPage) => {
@@ -41,7 +39,6 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
       setPage(0);
     }
   }, [page, transactionData.length]);
-
 
   //  handler for per page change :-
   const handleChangeRowsPerPage = (event) => {
@@ -113,6 +110,7 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
                         <DeleteIcon
                           className="deleteicontable"
                           onClick={() => handleDelete(item.id)}
+                          sx={{ cursor: "pointer", mr: 1 }}
                         />
                       </Tooltip>
                       <Tooltip
@@ -122,6 +120,7 @@ const TransactionTable = ({ data, handleDelete, handleEdit }) => {
                         <EditIcon
                           className="editicontable"
                           onClick={() => handleEdit(item.id)}
+                          sx={{ cursor: "pointer", mr: 1 }}
                         />
                       </Tooltip>
                     </TableCell>

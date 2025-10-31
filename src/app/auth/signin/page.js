@@ -83,15 +83,15 @@ const Login = () => {
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col items-center w-full"
+              className="!flex flex-col !items-center !w-full"
             >
               <Typography
                 level="h3"
-                className="text-white font-bold !text-5xl mb-2"
+                className="!text-white !font-bold !text-5xl !mb-2"
               >
                 Welcome Back!
               </Typography>
-              <Typography className="text-slate-200 text-sm mb-6 text-center">
+              <Typography className="!text-slate-200 !text-sm !mb-6 !text-center">
                 Sign in to access your guided meditations, daily practices, and
                 personal journey.
               </Typography>
@@ -104,7 +104,6 @@ const Login = () => {
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  // label="Email"
                   className="input-area"
                 />
               </FormControl>
@@ -117,7 +116,6 @@ const Login = () => {
                   name="password"
                   type="password"
                   placeholder="********"
-                  // label="Password"
                   className="input-area"
                 />
               </FormControl>
@@ -126,7 +124,7 @@ const Login = () => {
               {loader === false ? (
                 <Button
                   type="submit"
-                  className="w-full bg-white text-[#1e40af] font-semibold py-2 rounded-full hover:bg-slate-100 transition-all"
+                  className="w-full !bg-white !text-[#1e40af] !font-semibold py-2 !rounded-full !hover:bg-slate-100 !transition-all"
                 >
                   Login
                 </Button>

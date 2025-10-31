@@ -80,13 +80,13 @@ const ExpenseData = () => {
 
           {/* Tab Panels */}
           <Box>
-            <TabPanel className="p-0" value="1">
+            <TabPanel className="!p-0" value="1">
               <Transaction />
             </TabPanel>
-            <TabPanel className="p-0"  value="2">
+            <TabPanel className="!p-0"  value="2">
               <Income />
             </TabPanel>
-            <TabPanel className="p-0" value="3">
+            <TabPanel className="!p-0" value="3">
               <Expense />
             </TabPanel>
           </Box>

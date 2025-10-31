@@ -47,9 +47,9 @@ const Home = () => {
             information about our features and how to get started.
           </Typography>
 
-          <Button>
+          <Button className="tracker">
             {" "}
-            <Link href="/expense">Expense Tracker </Link>
+            <Link href="/expense">Go to Expense Tracker </Link>
           </Button>
         </Container>
       </Box>

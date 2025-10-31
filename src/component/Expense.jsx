@@ -20,7 +20,7 @@ import useLocalStorage from "use-local-storage";
 
     //  handler for page change :-
     const handleChangePage = (event, newPage) => {
-      setPage(newPage);
+      setPage(newPage);                                                                 
     };
 
     // handler for per page change :-
@@ -30,7 +30,7 @@ import useLocalStorage from "use-local-storage";
     };
 
  // filter the data only for expense:-
-    useEffect(() => {
+    useEffect(() => {                     
       const getData = localStorage.getItem("expense");
       if (getData) {
         const parsedData = JSON.parse(getData);

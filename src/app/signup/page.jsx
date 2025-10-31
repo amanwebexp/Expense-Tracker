@@ -1,16 +1,19 @@
 "use client";
-import SignUpHelp from "@/component/SignUp/SignUpHelp";
 import { errorMsg, successMsg } from "@/component/Toastmsg/toaster";
 import { Sheet } from "@mui/joy";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
-import {  Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import { Button } from "@mui/joy";
 import { signIn } from "next-auth/react";
 import { signupValidation } from "@/component/validation/signupValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { CircularProgress, FormControl } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import InputField from "@/component/shared/form/InputField";
+
 const SignUpform = () => {
   // useForm Hook:-
   const {
@@ -58,7 +61,6 @@ const SignUpform = () => {
     reset();
   };
 
-
   // After register direct login :-
   useEffect(() => {
     if (!user) return;
@@ -87,7 +89,6 @@ const SignUpform = () => {
     loginuser();
   }, [user]);
 
-  
   return (
     <>
       <div className="flex items-center  justify-center h-screen  bg-[url('/bg-cloud.jpg')] bg-cover bg-center">
@@ -112,29 +113,76 @@ const SignUpform = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                gap: 2,
               }}
             >
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col items-center w-full"
-              >
+              <form onSubmit={handleSubmit(onSubmit)} className="">
                 {/* Title */}
                 <Typography
                   level="h3"
-                  className="text-white font-bold !text-4xl mb-6 text-center"
+                  className="!text-white !font-bold !text-5xl !mb-6 !text-center"
                 >
                   Register User
                 </Typography>
 
                 {/* Input Fields */}
-                <SignUpHelp control={control} errors={errors} loader={loader} />
+
+                {/* Username */}
+                <FormControl className="w-full !mb-4">
+                  <InputField
+                    className="input-area"
+                    placeholder="User Name"
+                    control={control}
+                    errors={errors}
+                    name="username"
+                    type="text"
+                  />
+                </FormControl>
+
+                {/* Email */}
+                <FormControl className="w-full !mb-4">
+                  <InputField
+                    className="input-area"
+                    placeholder="Enter your email"
+                    control={control}
+                    errors={errors}
+                    name="email"
+                    type="email"
+                  />
+                </FormControl>
+
+                {/* Password */}
+                <FormControl className="w-full !mb-4">
+                  <InputField
+                    className="input-area"
+                    placeholder="********"
+                    control={control}
+                    errors={errors}
+                    name="password"
+                    type="password"
+                  />
+                </FormControl>
+                {/* Submit Button */}
+
+                {loader === false ? (
+                  <Button
+                    type="submit"
+                    className="w-full !max-w-[380px]  !bg-white !text-[#1e40af] !font-semibold py-2 !rounded-full !hover:bg-slate-100 !transition-all"
+                  >
+                    Register
+                  </Button>
+                ) : (
+                  <div className="flex justify-center mt-6">
+                    <CircularProgress size={24} sx={{ color: "white" }} />
+                  </div>
+                )}
 
                 {/* Footer Link */}
-                <p className="text-slate-200 text-sm mt-4">
+                <p className="!text-slate-200 !text-sm mt-4 !text-center">
                   Already have an account?{" "}
                   <Link
                     href="/auth/signin"
-                    className="text-white font-semibold"
+                    className="text-white font-semibold "
                   >
                     Sign in
                   </Link>
